@@ -1,0 +1,36 @@
+C* Music Player Audioscrobbler/Last.fm patch
+============================================
+
+Frank Terbeck wrote a patch for cmus that adds support for
+Audioscrobbler/Last.fm, then it was taken up by Clay Barnes for a time, with
+the hopes of importing it into mainline. This never happened and it once again
+fell by the wayside. I have updated it for my own use, and uploaded it to
+github in the hopes that it may one day make it to cmus mainline.
+
+Installation
+------------
+
+Get a current copy of the cmus git repository to patch:
+
+    git clone git://gitorious.org/cmus/cmus.git && cd cmus
+
+Patch the cmus tree:
+
+    patch < ../cmus-audioscrobbler/cmus-as.patch
+
+The build / install cmus as usual:
+
+    ./configure && make && su -c 'make install'
+
+Usage
+-----
+
+It's pretty simple. Just add these lines to your `~/.cmus/rc` file:
+
+    set as_enable=true
+    set as_user=(Your Last.fm Username)
+    set as_pass=(Your Last.fm Password)
+
+Alternatively, just type them as "`:set `" commands in cmus.
+
+Toggling listening statistics reporting off/on is accomplished by "`:set as_enable=false`"/"`set as_enable=true`" respectively.
