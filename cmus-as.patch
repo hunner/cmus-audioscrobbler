@@ -24,7 +24,7 @@ index 70d5b3e..01a86d2 100644
 -	keys.o keyval.o lib.o load_dir.o locking.o mergesort.o misc.o options.o \
 +	keys.o keyval.o lib.o load_dir.o locking.o network.o md5.o mergesort.o misc.o options.o \
  	output.o pcm.o pl.o play_queue.o player.o \
- 	read_wrapper.o server.o search.o \
+ 	rbtree.o read_wrapper.o server.o search.o \
 -	search_mode.o spawn.o tabexp.o tabexp_file.o \
 -	track.o track_info.o tree.o uchar.o ui_curses.o \
 +	search_mode.o spawn.o strlib.o tabexp.o tabexp_file.o \
@@ -1243,15 +1243,15 @@ diff --git a/lib.c b/lib.c
 index a89b0a0..e6e436d 100644
 --- a/lib.c
 +++ b/lib.c
-@@ -8,6 +8,7 @@
- #include "options.h"
+@@ -9,6 +9,7 @@
  #include "xmalloc.h"
+ #include "rbtree.h"
  #include "debug.h"
 +#include "as.h"
  
  #include <pthread.h>
  #include <string.h>
-@@ -369,6 +370,7 @@ struct track_info *sorted_set_selected(void)
+@@ -370,6 +371,7 @@ struct track_info *sorted_set_selected(void)
  	if (list_empty(&lib_editable.head))
  		return NULL;
  
@@ -2199,7 +2199,7 @@ index c8f00af..1a912b9 100644
  
  struct editable pl_editable;
  struct simple_track *pl_cur_track = NULL;
-@@ -86,6 +87,7 @@ struct track_info *pl_set_selected(void)
+@@ -87,6 +88,7 @@ struct track_info *pl_set_selected(void)
  	if (list_empty(&pl_editable.head))
  		return NULL;
  
@@ -2708,7 +2708,7 @@ diff --git a/ui_curses.c b/ui_curses.c
 index 43ddee0..31c48f3 100644
 --- a/ui_curses.c
 +++ b/ui_curses.c
-@@ -1368,6 +1368,32 @@ void error_msg(const char *format, ...)
+@@ -1371,6 +1371,32 @@ void error_msg(const char *format, ...)
  	}
  }
  
